@@ -5,7 +5,6 @@ on:
     branches:
       - test
     types: [opened, synchronize, reopened]
-
 jobs:
   test-and-sonar:
     if: github.head_ref == 'test-all'
@@ -67,9 +66,19 @@ jobs:
           done
 
       - name: Run unit & integration tests (no Selenium) & SonarQube analysis
-        run: ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AlexandreSama_Harmonia_API -Dsonar.organization=alexandresama -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} -Dsonar.pullrequest.branch=${{ github.head_ref }} -Dsonar.pullrequest.base=${{ github.base_ref }} -Dtest=!**/*Selenium*Test
+        run: ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AlexandreSama_Harmonia_API -Dsonar.organization=alexandresama -Dtest=!**/*Selenium*Test
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/harmonia
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
+
+      - name: Twilio SMS
+        uses: twilio-labs/actions-sms@2.0.0
+        with:
+          FROM_PHONE_NUMBER: ${{ secrets.FROM_PHONE_NUMBER }}
+          TO_PHONE_NUMBER: ${{ secrets.TO_PHONE_NUMBER }}
+          message: "Tout s'est bien passé, tu peut merge"
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+
