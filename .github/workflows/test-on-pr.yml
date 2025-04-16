@@ -5,6 +5,12 @@ on:
     branches:
       - test
     types: [opened, synchronize, reopened]
+
+env:
+  TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+  TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+  TWILIO_API_SECRET: ${{ secrets.TWILIO_API_SECRET }}
+
 jobs:
   test-and-sonar:
     if: github.head_ref == 'test-all'
@@ -76,9 +82,9 @@ jobs:
       - name: Twilio SMS
         uses: twilio-labs/actions-sms@2.0.0
         with:
-          FROM_PHONE_NUMBER: ${{ secrets.FROM_PHONE_NUMBER }}
-          TO_PHONE_NUMBER: ${{ secrets.TO_PHONE_NUMBER }}
-          message: "Tout s'est bien passé, tu peut merge"
-          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
-          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          to: ${{ secrets.TO_PHONE_NUMBER }}
+          from: ${{ secrets.FROM_PHONE_NUMBER }}
+          message: "✅ Tests OK sur test-all → test. Tu peux merge !"
+          twilioAccountSid: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          twilioAuthToken: ${{ secrets.TWILIO_AUTH_TOKEN }}
 
