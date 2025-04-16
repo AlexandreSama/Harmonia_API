@@ -15,8 +15,9 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: harmonia
-          MYSQL_USER: root
+          MYSQL_USER: testroot
           MYSQL_PASSWORD: alexandre123Sa
         ports:
           - 3306:3306
