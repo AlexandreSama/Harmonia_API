@@ -67,7 +67,7 @@ jobs:
           done
 
       - name: Run unit & integration tests (no Selenium) & SonarQube analysis
-        run: ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AlexandreSama_Harmonia_API -Dtest=!**/*Selenium*Test
+        run: ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AlexandreSama_Harmonia_API -Dsonar.organization=alexandresama -Dtest=!**/*Selenium*Test
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/harmonia
