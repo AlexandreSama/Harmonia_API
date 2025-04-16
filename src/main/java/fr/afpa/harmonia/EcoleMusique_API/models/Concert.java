@@ -1,7 +1,10 @@
 package fr.afpa.harmonia.EcoleMusique_API.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 /**
  * Représente un concert dans l'application.
@@ -13,6 +16,8 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "concert")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Concert {
 
     /**
@@ -37,5 +42,6 @@ public class Concert {
             nullable = false,
             unique = true
     )
+    @NonNull
     private String nomConcert;
 }

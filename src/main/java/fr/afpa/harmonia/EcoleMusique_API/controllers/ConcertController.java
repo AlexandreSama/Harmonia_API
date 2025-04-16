@@ -69,9 +69,7 @@ public class ConcertController {
             Concert current = c.get();
 
             String nomConcert = concert.getNomConcert();
-            if (nomConcert != null) {
-                current.setNomConcert(nomConcert);
-            }
+            current.setNomConcert(nomConcert);
             concertRepository.save(current);
             return current;
         } else {

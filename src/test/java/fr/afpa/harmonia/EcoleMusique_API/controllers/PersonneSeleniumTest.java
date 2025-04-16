@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Classe de test de bout en bout utilisant Selenium pour la gestion des personnes.
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PersonneSeleniumTest {
+public class PersonneSeleniumTest {
 
     private static WebDriver driver;
 
@@ -27,7 +27,7 @@ class PersonneSeleniumTest {
      * Initialisation du drver Sélénium
      */
     @BeforeAll
-    static void init() {
+    public static void init() {
         driver = new FirefoxDriver();
     }
 
@@ -36,7 +36,7 @@ class PersonneSeleniumTest {
      */
     @Test
     @Order(1)
-    void createPersonneTest() {
+    public void createPersonneTest() {
 
         // Accès à la page de liste des personnes
         driver.get("http://localhost:8081/listePersonnes");
@@ -66,7 +66,7 @@ class PersonneSeleniumTest {
      */
     @Test
     @Order(2)
-    void updatePersonneTest() {
+    public void updatePersonneTest() {
 
         // Accès à la page de liste des personnes
         driver.get("http://localhost:8081/listePersonnes");
@@ -98,14 +98,14 @@ class PersonneSeleniumTest {
      */
     @Test
     @Order(3)
-    void deletePersonneTest() {
+    public void deletePersonneTest() {
 
         // Accès à la page de liste des personnes
         driver.get("http://localhost:8081/listePersonnes");
 
         // Clique du bouton de suppression du dernier élément ajouté
-        WebElement btnModifier = driver.findElements(By.className("delete")).getLast();
-        btnModifier.click();
+        WebElement btnSupprimer = driver.findElements(By.className("delete")).getLast();
+        btnSupprimer.click();
 
         // Retour à la page de liste des personnes et vérification de la présence des données modifiées
         driver.get("http://localhost:8081/listePersonnes");
@@ -117,7 +117,7 @@ class PersonneSeleniumTest {
      * Fermeture du driver Selenium après les tests
      */
     @AfterAll
-    static void tearDown() {
+    public static void tearDown() {
         if (driver != null) {
             driver.quit();
         }

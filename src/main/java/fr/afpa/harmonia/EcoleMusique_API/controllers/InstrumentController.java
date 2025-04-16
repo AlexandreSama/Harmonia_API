@@ -19,16 +19,17 @@ public class InstrumentController {
     private InstrumentRepository instrumentRepository;
 
 
-    @PostMapping("/instrument/create")
+
     /**
      * Méthode automatique.
      * @return Résultat de la méthode.
      */
+    @PostMapping("/instrument/create")
     public Instrument createInstrument(@RequestBody Instrument instrument) {
         return instrumentRepository.save(instrument);
     }
 
-    @GetMapping("/instruments")
+    @GetMapping("/instrument")
     /**
      * Méthode automatique.
      * @return Résultat de la méthode.

@@ -1,5 +1,6 @@
 package fr.afpa.harmonia.EcoleMusique_API.controllers;
 
+import fr.afpa.harmonia.EcoleMusique_API.models.Personne;
 import fr.afpa.harmonia.EcoleMusique_API.repositories.PersonneRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Classe de test du controller de Personne.
  */
 @WebMvcTest(PersonneController.class)
-class PersonneControllerTest {
+public class PersonneControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -33,7 +37,7 @@ class PersonneControllerTest {
      * @throws Exception
      */
     @Test
-    void getPersonnesTest() throws Exception {
+    public void getPersonnesTest() throws Exception {
         mockMvc.perform(get("/personnes")).andExpect(status().isOk());
     }
 
@@ -43,7 +47,7 @@ class PersonneControllerTest {
      * @throws Exception
      */
     @Test
-    void createPersonneTest() throws Exception {
+    public void createPersonneTest() throws Exception {
         // Création du JSON à transmettre
         String json = "{\"nom\": \"NOM\",\"prenom\": \"Prenom\"}";
 
@@ -59,7 +63,7 @@ class PersonneControllerTest {
      * @throws Exception
      */
     @Test
-    void createPersonneNullTest() throws Exception {
+    public void createPersonneNullTest() throws Exception {
         // Création du JSON à transmettre
         String json = "{\"nom\": null,\"prenom\": null}";
 
@@ -70,28 +74,31 @@ class PersonneControllerTest {
     }
 
     // Test de modification ne passe pas, alors que parfaitement fonctionnel depuis PostMan/Site ?
-//    /**
-//     * Test de la modification d'une personne.
-//     *
-//     * @throws Exception
-//     */
-//    @Test
-//    public void updatePersonneTest() throws Exception {
-//        // Création d'une personne à modifier
-//        String jsonCreate = "{\"nom\":\"NOM\",\"prenom\":\"Prenom\"}";
-//        mockMvc.perform(post("/personne")
-//                .contentType(MediaType.APPLICATION_JSON).content(jsonCreate));
-//
-//        // Création du JSON à transmettre
-//        String jsonUpdate = "{\"id\": 1," +
-//                "\"nom\": \"NOM2\"," +
-//                "\"prenom\": \"Prenom2\"}";
-//
-//        // Test de modification de la personne
-//        mockMvc.perform(MockMvcRequestBuilders.put("/personne/1")
-//                        .contentType(MediaType.APPLICATION_JSON).content(jsonUpdate))
-//                .andExpect(status().isOk());
-//    }
+    /**
+     * Test de la modification d'une personne.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void updatePersonneTest() throws Exception {
+        // Création d'une personne à modifier
+        Personne personne = new Personne();
+        personne.setId(1);
+        personne.setNom("NOM");
+        personne.setPrenom("Prenom");
+
+        when(personneRepository.findById(Integer.valueOf(1))).thenReturn(Optional.of(personne));
+
+        // Création du JSON à transmettre
+        String jsonUpdate = "{\"id\": 1," +
+                "\"nom\": \"NOM2\"," +
+                "\"prenom\": \"Prenom2\"}";
+
+        // Test de modification de la personne
+        mockMvc.perform(MockMvcRequestBuilders.put("/personne/1")
+                        .contentType(MediaType.APPLICATION_JSON).content(jsonUpdate))
+                .andExpect(status().isOk());
+    }
 
     /**
      * Test de la modification d'une personne avec nom et prénom nuls.
@@ -99,7 +106,7 @@ class PersonneControllerTest {
      * @throws Exception
      */
     @Test
-    void updatePersonneNullTest() throws Exception {
+    public void updatePersonneNullTest() throws Exception {
         // Création d'une personne à modifier
         String jsonCreate = "{\"nom\":\"NOM\",\"prenom\":\"Prenom\"}";
         mockMvc.perform(post("/personne")
@@ -122,7 +129,7 @@ class PersonneControllerTest {
      * @throws Exception
      */
     @Test
-    void getPersonneTest() throws Exception {
+    public void getPersonneTest() throws Exception {
         // Création d'une personne à rechercher
         String json = "{\"nom\":\"NOM\",\"prenom\":\"Prenom\"}";
         mockMvc.perform(MockMvcRequestBuilders.post("/personne")
@@ -138,7 +145,7 @@ class PersonneControllerTest {
      * @throws Exception
      */
     @Test
-    void deletePersonneTest() throws Exception {
+    public void deletePersonneTest() throws Exception {
         // Création d'une personne à supprimer
         String json = "{\"nom\":\"NOM\",\"prenom\":\"Prenom\"}";
         mockMvc.perform(MockMvcRequestBuilders.post("/personne")
