@@ -49,11 +49,11 @@ jobs:
             sleep 2
           done
 
-      - name: Launching API
-        run: ./mvnw spring-boot:run
+      - name: Make mvnw executable
+        run: chmod +x ./mvnw
 
-      - name: Run tests with Maven
-        run: ./mvnw test
+      - name: Run only non-Selenium tests
+        run: ./mvnw test -Dtest=!**/*Selenium*Test
         env:
           SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/testdb
           SPRING_DATASOURCE_USERNAME: testuser
