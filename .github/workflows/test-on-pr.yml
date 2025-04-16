@@ -49,6 +49,9 @@ jobs:
             sleep 2
           done
 
+      - name: Make mvnw executable
+        run: chmod +x ./mvnw
+
       - name: Launching API
         run: ./mvnw spring-boot:run
 
