@@ -53,6 +53,6 @@ jobs:
       - name: Run only non-Selenium tests
         run: ./mvnw test -Dtest=!**/*Selenium*Test
         env:
-          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/testdb
+          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/harmonia
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
