@@ -66,14 +66,10 @@ jobs:
             sleep 2
           done
 
-      - name: Run unit & integration tests (no Selenium)
-        run: ./mvnw test -Dtest=!**/*Selenium*Test
+      - name: Run unit & integration tests (no Selenium) & SonarQube analysis
+        run: ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AlexandreSama_Harmonia_API -Dtest=!**/*Selenium*Test
         env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/harmonia
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
-
-      - name: Run SonarQube analysis
-        run: ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=AlexandreSama_Harmonia_API
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
