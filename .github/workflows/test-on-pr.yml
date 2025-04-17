@@ -106,7 +106,7 @@ jobs:
           description: "Tous les tests sur la Pull Request sont passés. Merge tranquille 🚀."
           image: ${{ secrets.EMBED_SUCCESS_URL }}
           color: 0x00ff00  # Vert
-          url: https://github.com/${{ github.repository }}/runs/${{ github.run_id }}/artifacts/${{ steps.upload_artifact.outputs.artifact-id }}
+          url: https://media.tenor.com/5TrjgGdczhQAAAAj/flexo3.gif
           username: GitHub Actions
           avatar_url: ${{ secrets.AVATAR_SUCCESS_URL }}
 
@@ -121,6 +121,6 @@ jobs:
           description: "Certains tests ont échoué sur la Pull Request. Check le CI vite."
           image: ${{ secrets.EMBED_FAILURE_IMAGE }}
           color: 0xff0000  # Rouge
-          url: ${{ github.event.pull_request.html_url }}
+          url: https://media1.tenor.com/m/HZClb9KQ7o0AAAAd/pepe-rain-pepe-the-frog.gif
           username: GitHub Actions
           avatar_url: ${{ secrets.AVATAR_FAILURE_URL }}
