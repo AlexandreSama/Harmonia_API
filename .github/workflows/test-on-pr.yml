@@ -88,7 +88,7 @@ jobs:
 
     steps:
       - name: Notify success on Discord
-        if: success()
+        if: needs.test-and-sonar.result == 'success'
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
@@ -103,7 +103,7 @@ jobs:
           avatar_url: ${{ secrets.AVATAR_SUCCESS_URL }}
 
       - name: Notify failure on Discord
-        if: failure()
+        if: needs.test-and-sonar.result == 'failure'
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
