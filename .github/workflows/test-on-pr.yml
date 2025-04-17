@@ -79,6 +79,14 @@ jobs:
           SPRING_DATASOURCE_USERNAME: root
           SPRING_DATASOURCE_PASSWORD: root
 
+      - name: Chargement de l'artefact
+        id: upload_artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-api.jar
+          path: target/*.jar
+          retention-days: 1
+
   discord_notif:
     name: Discord
     runs-on: ubuntu-latest
@@ -98,7 +106,7 @@ jobs:
           description: "Tous les tests sur la Pull Request sont passés. Merge tranquille 🚀."
           image: ${{ secrets.EMBED_SUCCESS_URL }}
           color: 0x00ff00  # Vert
-          url: ${{ github.event.pull_request.html_url }}
+          url: https://github.com/${{ github.repository }}/runs/${{ github.run_id }}/artifacts/${{ steps.upload_artifact.outputs.artifact-id }}
           username: GitHub Actions
           avatar_url: ${{ secrets.AVATAR_SUCCESS_URL }}
 
