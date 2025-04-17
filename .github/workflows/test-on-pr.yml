@@ -82,9 +82,9 @@ jobs:
       - name: Twilio SMS
         uses: twilio-labs/actions-sms@2.0.0
         with:
-          to: ${{ secrets.TO_PHONE_NUMBER }}
-          from: ${{ secrets.FROM_PHONE_NUMBER }}
-          message: "✅ Tests OK sur test-all → test. Tu peux merge !"
-          twilioAccountSid: ${{ secrets.TWILIO_ACCOUNT_SID }}
-          twilioAuthToken: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TO_PHONE_NUMBER: ${{ secrets.TO_PHONE_NUMBER }}
+          FROM_PHONE_NUMBER: ${{ secrets.FROM_PHONE_NUMBER}}
+          message: 'Coucou'
 
