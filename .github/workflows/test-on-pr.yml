@@ -111,7 +111,7 @@ jobs:
           content: "Hey <@256892994504884224> ❌ Attention la PR a échoué !"
           title: "Tests FAILED ❌"
           description: "Certains tests ont échoué sur la Pull Request. Check le CI vite."
-          image: ${{ secrets.EMBED_FAILURE_URL }}
+          image: ${{ secrets.EMBED_FAILURE_IMAGE }}
           color: 0xff0000  # Rouge
           url: ${{ github.event.pull_request.html_url }}
           username: GitHub Actions
