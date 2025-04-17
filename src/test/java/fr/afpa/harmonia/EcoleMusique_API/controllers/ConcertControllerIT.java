@@ -59,7 +59,7 @@ class ConcertControllerIT {
         mockMvc.perform(post("/concert/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonConcert))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk()
                 .andExpect(jsonPath("$.identifiantConcert", notNullValue()))
                 .andExpect(jsonPath("$.nomConcert", is("NewConcert")));
     }
