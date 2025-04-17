@@ -83,11 +83,13 @@ jobs:
     name: Discord
     runs-on: ubuntu-latest
     needs: test-and-sonar
+    continue-on-error: true
+    if: always()  # <-- Important ici, toujours essayer d'envoyer
 
     steps:
       - name: Notify success on Discord
-        uses: sarisia/actions-status-discord@v1
         if: success()
+        uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: success
@@ -100,10 +102,9 @@ jobs:
           username: GitHub Actions
           avatar_url: ${{ secrets.AVATAR_SUCCESS_URL }}
 
-      # ❌ Notif Discord si FAILURE
       - name: Notify failure on Discord
-        uses: sarisia/actions-status-discord@v1
         if: failure()
+        uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: failure
