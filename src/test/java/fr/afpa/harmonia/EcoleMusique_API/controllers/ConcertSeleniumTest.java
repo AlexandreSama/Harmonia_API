@@ -1,8 +1,6 @@
 package fr.afpa.harmonia.EcoleMusique_API.controllers;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * la mise à jour et la suppression de concerts via l'interface web.
  * </p>
  */
-public class ConcertSeleniumTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class ConcertSeleniumTest {
 
     private static WebDriver driver;
 
@@ -28,7 +27,7 @@ public class ConcertSeleniumTest {
      * Initialise le WebDriver avant l'exécution de tous les tests.
      */
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         // Définir le chemin vers geckodriver si nécessaire
         driver = new FirefoxDriver();
     }
@@ -41,7 +40,8 @@ public class ConcertSeleniumTest {
      * </p>
      */
     @Test
-    public void testAddConcert() {
+    @Order(1)
+    void testAddConcert() {
         // Accéder à la page d'ajout d'un concert
         driver.get("http://localhost:8081/concert/create");
 
@@ -68,13 +68,14 @@ public class ConcertSeleniumTest {
      * </p>
      */
     @Test
-    public void testUpdateConcert() {
+    @Order(2)
+    void testUpdateConcert() {
         // Accéder à la page listant les concerts
         driver.get("http://localhost:8081/concerts");
 
         // Cliquer sur le bouton de modification pour un concert existant
         // On suppose ici que le bouton a une classe de la forme "update-<idConcert>"
-        WebElement updateButton = driver.findElement(By.cssSelector(".update"));
+        WebElement updateButton = driver.findElements(By.className("update")).getLast();
         updateButton.click();
 
         // Sur la page d'édition, modifier le nom du concert
@@ -88,7 +89,7 @@ public class ConcertSeleniumTest {
 
         // Vérifier que le nouveau nom est affiché dans la liste
         driver.get("http://localhost:8081/concerts");
-        WebElement concertMisAJour = driver.findElement(By.xpath("//*[text()='UpdatedConcert Selenium']"));
+        WebElement concertMisAJour = driver.findElement(By.xpath("//td[text()='UpdatedConcert Selenium']"));
         assertNotNull(concertMisAJour);
     }
 
@@ -100,13 +101,14 @@ public class ConcertSeleniumTest {
      * </p>
      */
     @Test
-    public void testDeleteConcert() {
+    @Order(3)
+    void testDeleteConcert() {
         // Accéder à la page listant les concerts
         driver.get("http://localhost:8081/concerts");
 
         // Cliquer sur le bouton de suppression pour le concert à supprimer
         // On suppose que le bouton a une classe de la forme "delete-<idConcert>"
-        WebElement deleteButton = driver.findElement(By.cssSelector(".delete"));
+        WebElement deleteButton = driver.findElements(By.className("delete")).getLast();
         deleteButton.click();
 
         // Une fois la suppression effectuée, vérifier que le concert n'est plus affiché
@@ -119,7 +121,7 @@ public class ConcertSeleniumTest {
      * Ferme le WebDriver après l'exécution de tous les tests.
      */
     @AfterAll
-    public static void tearDown() {
+    static void tearDown() {
         if (driver != null) {
             driver.quit();
         }

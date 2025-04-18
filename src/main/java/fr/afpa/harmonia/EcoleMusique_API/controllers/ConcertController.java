@@ -21,7 +21,7 @@ public class ConcertController {
     private ConcertRepository concertRepository;
 
     /**
-     * Crée un nouveau concert.
+     * Crée un nouveau concert
      * @param concert Le concert à créer, envoyé dans le corps de la requête.
      * @return Le concert créé.
      */
@@ -69,9 +69,7 @@ public class ConcertController {
             Concert current = c.get();
 
             String nomConcert = concert.getNomConcert();
-            if (nomConcert != null) {
-                current.setNomConcert(nomConcert);
-            }
+            current.setNomConcert(nomConcert);
             concertRepository.save(current);
             return current;
         } else {
