@@ -111,6 +111,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: package-api.jar
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
