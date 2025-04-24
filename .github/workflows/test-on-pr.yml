@@ -89,7 +89,7 @@ jobs:
         id: upload_artifact
         uses: actions/upload-artifact@v4
         with:
-          name: package-api.jar
+          name: package.jar
           path: target/*.jar
           retention-days: 1
 
@@ -114,7 +114,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: package-api.jar
+          name: package.jar
+          path: .
+
+      - name: Rename jar
+        run: mv *.jar package.jar
 
       - name: Build and push
         uses: docker/build-push-action@v4

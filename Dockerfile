@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
 
 # 3. Copie le JAR compilé depuis le dossier target
-COPY package-api.jar app.jar
+COPY package.jar app.jar
 
 # 4. Expose le port (ajustez si besoin)
 EXPOSE 9000
