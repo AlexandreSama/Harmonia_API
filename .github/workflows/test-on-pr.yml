@@ -89,7 +89,7 @@ jobs:
         id: upload_artifact
         uses: actions/upload-artifact@v4
         with:
-          name: package-api.jar
+          name: package.jar
           path: target/*.jar
           retention-days: 1
 
@@ -97,7 +97,7 @@ jobs:
     name: Build & Push Docker Image
     runs-on: ubuntu-latest
     needs: test-and-sonar
-    if: ${{ always() && github.event_name == 'push' && github.ref == 'refs/heads/develop' }}
+    if: ${{ always() }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -110,6 +110,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: package.jar
+          path: .
+
+      - name: Rename jar
+        run: mv *.jar package.jar
 
       - name: Build and push
         uses: docker/build-push-action@v4
